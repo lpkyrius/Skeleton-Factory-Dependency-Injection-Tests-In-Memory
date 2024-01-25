@@ -25,16 +25,16 @@ class TaskRepository implements ITaskRepository {
         return task;
     }
 
-    async update({ userId, summary }: Task): Promise<Task> {
-        const task = { userId, summary };
+    async update(taskToUpdate: Task): Promise<Task> {
+        // const task = { taskToUpdate.userId, taskToUpdate.summary };
     
-        return task;
+        return taskToUpdate;
     }
 
-    async delete(id: string): Promise<boolean> {
-        const task = true;
+    async delete(taskToDelete: Task): Promise<boolean> {
+        const taskDeleted: boolean = true;
 
-        return !!task;
+        return !!taskDeleted;
     }
 
     async exists(id: string): Promise<boolean> {

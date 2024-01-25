@@ -19,6 +19,15 @@ class TasksRepositoryInMemory implements ITaskRepository {
     }
   ];
 
+  private emptyTasks: Task[] = [
+    {
+      id: '',
+      userId: '',
+      summary: '',
+      created_at: new Date(),
+    },
+  ];
+
   async add(task: Task): Promise<Task> {
     Object.assign(task, {
       id: uuid(),
@@ -38,9 +47,9 @@ class TasksRepositoryInMemory implements ITaskRepository {
     throw new Error("Task not found");
   }
 
-  async delete(id: string): Promise<boolean> {
+  async delete(task: Task): Promise<boolean> {
     const initialLength = this.tasks.length;
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    this.tasks = this.tasks.filter((task) => task.id !== task.id);
     return this.tasks.length !== initialLength;
   }
 
@@ -49,7 +58,7 @@ class TasksRepositoryInMemory implements ITaskRepository {
   }
 
   async list(): Promise<Task[]> {
-    return [...this.tasks];
+    return ([...this.tasks].length === 0) ? this.emptyTasks: [...this.tasks];
   }
 }
 

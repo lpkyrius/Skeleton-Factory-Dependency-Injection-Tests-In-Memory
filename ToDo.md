@@ -3,8 +3,8 @@
 - [x] Project structure
 - [x] TDD
 - [x] In-Memory repository
-- [ ] Unit tests
-- [ ] E2E tests - changing factory repository - temporally - to in-memory.
+- [x] Unit tests
+- [ ] E2E tests - addressing the factory to in-memory repository.
 
 
 _**Future** migrate maintenance-tasks project_

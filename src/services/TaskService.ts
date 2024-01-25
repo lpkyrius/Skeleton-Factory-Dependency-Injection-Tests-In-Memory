@@ -13,14 +13,13 @@ class TaskService {
   constructor(private taskRepository: ITaskRepository) {}
 
   async add({ userId, summary }: IAddTaskRequest) {
-    const taskAlreadyExists = await this.taskRepository.exists(userId);
-
-    if (taskAlreadyExists) {
-      throw new Error("Task already exists!");
-    }
-
     const taskCreate = Task.create({ userId, summary });
     const task = await this.taskRepository.add(taskCreate);
+
+    if (!task) {
+      throw new Error("Error creating task!");
+    }
+
     return task;
   }
 
@@ -34,8 +33,8 @@ class TaskService {
     return updatedTask;
   }
 
-  async delete(id: string) {
-    const taskDeleted = await this.taskRepository.delete(id);
+  async delete(taskToDelete: Task) {
+    const taskDeleted = await this.taskRepository.delete(taskToDelete);
 
     if (!taskDeleted) {
       throw new Error("Error deleting task!");
@@ -47,6 +46,11 @@ class TaskService {
   async list() {
     return await this.taskRepository.list();
   }
+
+  async exist(id: string): Promise<boolean> {
+    return await this.taskRepository.exists(id);
+  }
+
 }
 
 export { 
