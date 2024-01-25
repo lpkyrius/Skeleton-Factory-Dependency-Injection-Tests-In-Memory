@@ -3,6 +3,7 @@ import { Task } from '../entities/Task';
 import { ITaskRepository } from '../repository/ITaskRepository';
 import { TaskService } from './TaskService';
 import { TasksRepositoryInMemory } from '../repository/in-memory/TasksRepositoryInMemory';
+import exp from 'constants';
 
 describe('#taskService', () => {
 
@@ -47,6 +48,7 @@ describe('#taskService', () => {
       expect(task).toHaveProperty('id');
       expect(task.summary).toBe('Test summary');
     });
+
   });
   
   describe('#List Tasks', () => {
@@ -88,21 +90,49 @@ describe('#taskService', () => {
       expect(updatedTask).toHaveProperty('id');
       expect(updatedTask.summary).toBe('Test summary already updated!!!');
     });
+    
+    it('should throw an error when updating a non-existing task on TaskService', async () => {
+      const taskError: Task = {
+        id: 'this.id.should.not.exist',
+        summary: 'Test summary to be throw error',
+      };
+      await expect(async () => {
+        const updatedTaskError: Task = await taskService.update(taskError);
+      }).rejects.toThrow('Task not found');
+    });
+
   });
 
   describe('#Delete Tasks', () => {
 
-    it('should be able to update an existent task', async () => {
+    it('should be able to delete an existent task', async () => {
       const taskData = {
         userId: '533b7681-b1c3-4244-8a37-423ae7a3d8ac',
         summary: 'Test summary to be deleted',
       };
 
       const task: Task = await taskService.add(taskData);
-      const expected: boolean = await taskService.exist(task.id!);
+      const expectedBefore: boolean = await taskService.exist(task.id!);
 
-      expect(expected).toBe(true);
+      const deletedTask = await taskService.delete(task);
+      const expectedAfter: boolean = await taskService.exist(task.id!);
+
+      expect(deletedTask).toBeTruthy;
+      expect(expectedBefore).toBe(true);
+      expect(expectedAfter).toBe(false);
     });
+
+    it('should return false when deleting a non-existing task on TaskService', async () => {
+      const taskError: Task = {
+        id: 'this.id.should.not.exist',
+        summary: 'Test summary to be throw error',
+      };
+      await expect(async () => {
+        const deletedTaskError: boolean = await taskService.delete(taskError);
+      }).toBeFalsy;
+      
+    });
+
   });
 
 });

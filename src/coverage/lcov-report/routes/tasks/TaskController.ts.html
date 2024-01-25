@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for repository/in-memory/TasksRepositoryInMemory.ts</title>
+    <title>Code coverage report for routes/tasks/TaskController.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">repository/in-memory</a> TasksRepositoryInMemory.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">routes/tasks</a> TaskController.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.35% </span>
+                <span class="strong">51.16% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/39</span>
+                <span class='fraction'>22/43</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>2/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.35% </span>
+                <span class="strong">51.16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>29/39</span>
+                <span class='fraction'>22/43</span>
             </div>
         
             
@@ -101,7 +101,11 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -109,8 +113,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -127,64 +134,69 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
-import { Task } from "../../entities/Task";
-import { ITaskRepository } from "../ITaskRepository";
-import { v4 as uuid } from "uuid";
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response } from "express";
+import { TaskService } from "../../services/TaskService";
 &nbsp;
-class TasksRepositoryInMemory implements ITaskRepository {
-  private tasks: Task[] = [];
 &nbsp;
-  async add(task: Task): Promise&lt;Task&gt; {
-    Object.assign(task, {
-      // id: uuid(),
-      id: Date(),
-    });
+class TaskController {
+  constructor(private taskService: TaskService) {}
 &nbsp;
-    this.tasks.push(task);
-    return task;
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  async update(task: Task): Promise&lt;Task&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    // Object.assign(task, {</span>
-<span class="cstat-no" title="statement not covered" >    //   id: uuid(),</span>
-<span class="cstat-no" title="statement not covered" >    // });</span>
+<span class="fstat-no" title="function not covered" >  async httpAddTask(req: Request, res: Response) {</span>
+<span class="cstat-no" title="statement not covered" >    const { userId, summary } = req.body;</span>
+<span class="cstat-no" title="statement not covered" >    const task = await this.taskService.add({ userId, summary });</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    // this.tasks.push(task);</span>
-<span class="cstat-no" title="statement not covered" >    return task;</span>
+<span class="cstat-no" title="statement not covered" >    return res.json(task);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  async delete(id: number): Promise&lt;boolean&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    // const task = this.tasks.some((task) =&gt; task.id === id);</span>
-<span class="cstat-no" title="statement not covered" >    return true;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  async httpListTasks(req: Request, res: Response) {
+    // const { userId, summary } = request.body;
+    const task = await this.taskService.list();
 &nbsp;
-  async exists(id: number): Promise&lt;boolean&gt; {
-    const task = this.tasks.some((task) =&gt; task.id === id);
-    return task;
+    return res.json(task);
   }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  async httpUpdateTask(req: Request, res: Response) {</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    // =========================================================================================</span>
+<span class="cstat-no" title="statement not covered" >    // This method is responsible for rules, such as, check if the user is the owner of the task</span>
+<span class="cstat-no" title="statement not covered" >    // =========================================================================================</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    // const { userId, summary } = request.body;</span>
+<span class="cstat-no" title="statement not covered" >    // const task = await this.taskService.add({ userId, summary });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    // return response.json(task);</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(200).json({ message: 'success' });</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >  async httpDeleteTask(req: Request, res: Response) {</span>
+<span class="cstat-no" title="statement not covered" >    const { id } = req.body;</span>
+<span class="cstat-no" title="statement not covered" >    const deletedTask = await this.taskService.delete( id );</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    return res.json(deletedTask);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
-export { TasksRepositoryInMemory };</pre></td></tr></table></pre>
+export { TaskController };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-19T22:08:25.243Z
+                at 2024-01-25T19:30:49.580Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

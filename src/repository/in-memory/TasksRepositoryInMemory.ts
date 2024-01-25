@@ -44,7 +44,7 @@ class TasksRepositoryInMemory implements ITaskRepository {
       this.tasks[index] = task;
       return task;
     }
-    throw new Error("Task not found");
+    throw new Error('Task not found');
   }
 
   async delete(task: Task): Promise<boolean> {
