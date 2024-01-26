@@ -1,18 +1,19 @@
 import { Router, Request, Response } from 'express';
-import MaintenanceTaskFactory from '../../factory/TaskFactory';
+import TaskFactory from '../../factory/TaskFactory';
 
 const tasksRouter = Router();
 
-const maintenanceTaskFactory = async () => {
-    return await MaintenanceTaskFactory.createInstance();
+const taskFactory = async () => {
+    return await TaskFactory.createInstance();
 }
 
-tasksRouter.get('/task/list', async (req: Request, res: Response) => await (await maintenanceTaskFactory()).httpListTasks(req, res));
-tasksRouter.put('/task/update/:id', async (req: Request, res: Response) => await (await maintenanceTaskFactory()).httpUpdateTask(req, res));
+tasksRouter.post('/task/add', async (req: Request, res: Response) => await (await taskFactory()).httpAddTask(req, res));
+tasksRouter.get('/task/list', async (req: Request, res: Response) => await (await taskFactory()).httpListTasks(req, res));
+tasksRouter.put('/task/update/:id', async (req: Request, res: Response) => await (await taskFactory()).httpUpdateTask(req, res));
 
     
 // tasksRouter.get ('/task/list', (request, response) => taskController.httpAddTask(request, response) );  
-// tasksRouter.post('/task/add', verifyJWT, httpAddTask);  
+  
 // tasksRouter.put ('/task/update/:id', verifyJWT, httpUpdateTask);
 // tasksRouter.delete ('/task/delete/:id', verifyJWT, httpDeleteTask);
 

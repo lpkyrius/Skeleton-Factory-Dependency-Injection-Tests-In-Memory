@@ -1,22 +1,10 @@
-// import type {Config} from 'jest';
-
-// module.exports = {
-//   clearMocks: true,
-//   coverageProvider: 'v8',
-//   preset: 'ts-jest',
-//   testMatch: ['**/**/*.test.ts'],
-// };
+import type {Config} from 'jest';
 
 export default {
-  clearMocks: true,
+  // clearMocks: true,
   preset: 'ts-jest',
   rootDir: 'src/',
   testMatch: ['**/**/*.test.ts'],
-
-  // collectCoverage: true,
-  // collectCoverageFrom: [
-  //     'src/**/*.ts'
-  // ],
   coveragePathIgnorePatterns: [
       'node_modules',
       'test-config',
@@ -26,7 +14,6 @@ export default {
       'src/app.ts',
       '.mock.ts'
   ],
-
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   coverageReporters: [
@@ -43,7 +30,6 @@ export default {
        statements:100
      }
    },
- 
   maxWorkers: '50%',
   testEnvironment: 'node',
   watchPathIgnorePatterns: [

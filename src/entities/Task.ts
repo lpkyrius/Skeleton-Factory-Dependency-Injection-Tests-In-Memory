@@ -10,11 +10,6 @@ class Task {
         summary
       });
     }
-  
-    static create({ userId, summary }: Task) {
-      const task = new Task({ userId, summary });
-      return task;
-    }
   }
   
   export { Task };

@@ -9,22 +9,19 @@ describe('#taskService', () => {
 
   let tasksRepository: ITaskRepository;
   let taskService: TaskService;
-  let testTask: Task;
 
   beforeAll(() => {
     tasksRepository = new TasksRepositoryInMemory();
     taskService = new TaskService(tasksRepository);
   });
 
-
-
-  describe('#Create Tasks', () => {
+  describe('#Task exists', () => {
     let task: Task; 
 
     it('should return false when check if a non-existent task exists', async () => {
       const checkTask = {
         id: '123abc',
-        summary: 'Test summary',
+        summary: 'Test summary not existent task.',
       };
       const expected: boolean = await taskService.exist(checkTask.id!);
 
@@ -38,7 +35,7 @@ describe('#taskService', () => {
     it('should be able to create a new task and confirm it exists', async () => {
       const taskData = {
         userId: '533b7681-b1c3-4244-8a37-423ae7a3d8ac',
-        summary: 'Test summary',
+        summary: 'Test summary created with unit test.',
       };
 
       task = await taskService.add(taskData);
@@ -46,7 +43,7 @@ describe('#taskService', () => {
 
       expect(expected).toBe(true);
       expect(task).toHaveProperty('id');
-      expect(task.summary).toBe('Test summary');
+      expect(task.summary).toBe('Test summary created with unit test.');
     });
 
   });
