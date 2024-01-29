@@ -14,22 +14,23 @@ class TaskService {
 
   async add({ userId, summary }: IAddTaskRequest) {
     const taskCreate = { userId, summary };
-
     return await this.taskRepository.add(taskCreate);
   }
 
-  async update(taskToUpdate: Task) {
-
+  async update(taskToUpdate: Task): Promise<Task> {
       return await this.taskRepository.update(taskToUpdate);
   }
 
-  async delete(taskToDelete: Task) {
-    
-    return await this.taskRepository.delete(taskToDelete);
+  async delete(id: string): Promise<boolean> {
+    return await this.taskRepository.delete(id);
   }
 
-  async list() {
+  async list(): Promise<Task[]> {
     return await this.taskRepository.list();
+  }
+
+  async findById(id: string): Promise<Task> {
+    return await this.taskRepository.findTaskById(id);
   }
 
   async exist(id: string): Promise<boolean> {

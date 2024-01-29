@@ -95,7 +95,7 @@ describe('#taskService', () => {
       };
       await expect(async () => {
         const updatedTaskError: Task = await taskService.update(taskError);
-      }).rejects.toThrow('Task not found');
+      }).rejects.toThrow('task not found');
     });
 
   });
@@ -111,7 +111,7 @@ describe('#taskService', () => {
       const task: Task = await taskService.add(taskData);
       const expectedBefore: boolean = await taskService.exist(task.id!);
 
-      const deletedTask = await taskService.delete(task);
+      const deletedTask = await taskService.delete(task.id!);
       const expectedAfter: boolean = await taskService.exist(task.id!);
 
       expect(deletedTask).toBeTruthy;
@@ -120,14 +120,9 @@ describe('#taskService', () => {
     });
 
     it('should return false when deleting a non-existing task on TaskService', async () => {
-      const taskError: Task = {
-        id: 'this.id.should.not.exist',
-        summary: 'Test summary to be throw error',
-      };
-      await expect(async () => {
-        const deletedTaskError: boolean = await taskService.delete(taskError);
+      expect(async () => {
+        const deletedTaskError: boolean = await taskService.delete('this.id.should.not.exist');
       }).toBeFalsy;
-      
     });
 
   });

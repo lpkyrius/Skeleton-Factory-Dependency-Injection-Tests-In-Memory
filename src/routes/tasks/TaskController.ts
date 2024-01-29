@@ -6,66 +6,121 @@ class TaskController {
   constructor(private taskService: TaskService) {}
 
   async httpAddTask(req: Request, res: Response) {
-    const { userId, summary } = req.body;
+    try {
+      const { userId, summary } = req.body;
 
-    if (!this.checkUserId(userId))
-      return res.status(400).json({ error: 'invalid userId' });
-    if (!this.checkSummary(summary))
-      return res.status(400).json({ error: 'invalid summary' });
+      if (!this.checkUserId(userId))
+        return res.status(400).json({ error: 'invalid userId' });
+      if (!this.checkSummary(summary))
+        return res.status(400).json({ error: 'invalid summary' });
 
-    const task = await this.taskService.add({ userId, summary });
+      const task = await this.taskService.add({ userId, summary });
 
-    return res.status(200).json(task);
+      return res.status(200).json(task);
+    } catch (error: any) {
+      console.error(`httpAddTask Error-> ${error}`);
+      res.status(500).json({error: 'error attempting to add a task'});
+    } 
   }
 
   async httpListTasks(req: Request, res: Response) {
-    const task = await this.taskService.list();
+    try {
+      const task = await this.taskService.list();
 
-    return res.status(200).json(task);
+      return res.status(200).json(task);
+    } catch (error: any) {
+      console.error(`httpListTasks Error-> ${error}`);
+      res.status(500).json({error: 'error attempting to list tasks'});
+    }
+  }
+
+  async httpFindById(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      if (!id)
+        return res.status(400).json({ error: 'invalid id' });
+
+      const taskExist = await this.taskService.exist(id)
+      if (!taskExist)
+        return res.status(404).json({ error: 'task not found' });
+      
+      return res.status(200).json(await this.taskService.findById(id));
+    } catch (error: any) {
+      console.error(`httpFindById Error-> ${error}`);
+      res.status(500).json({error: 'error attempting to find the task'});
+    }
   }
 
   async httpUpdateTask(req: Request, res: Response) {
-    const taskToUpdate: Task = req.body;
+    try {
+      const taskToUpdate: Task = req.body;
 
-    if (!this.checkUserId(taskToUpdate.userId!))
-      return res.status(400).json({ error: 'invalid userId' });
-    if (!this.checkSummary(taskToUpdate.summary))
-      return res.status(400).json({ error: 'invalid summary' });
+      if (!this.checkUserId(taskToUpdate.userId!))
+        return res.status(400).json({ error: 'invalid userId' });
+      if (!this.checkSummary(taskToUpdate.summary))
+        return res.status(400).json({ error: 'invalid summary' });
 
-    const task = await this.taskService.update(taskToUpdate);
-
-    return res.status(200).json(task);
+      const task = await this.taskService.update(taskToUpdate);
+      
+      return res.status(200).json(task);
+    } catch (error: any) {
+      if (error.message.includes('task not found')) 
+        return res.status(404).json({ error: 'task not found' });
+    
+      console.error(`httpUpdateTask Error-> ${error}`);
+      res.status(500).json({error: 'error attempting to update a task'});
+    }
   }
 
   async httpDeleteTask(req: Request, res: Response) {
-    const { id } = req.body;
-    const deletedTask = await this.taskService.delete( id );
+    try {
+      const id = req.params.id;
+      if (!(await this.taskService.exist(id)))
+        return res.status(404).json({ message: 'task not found'});  
+      
+      const deletedTask = await this.taskService.delete( id );
+      if (!deletedTask)
+        return res.status(404).json({ message: 'task not deleted'});
 
-    return res.json(deletedTask);
+      return res.status(200).json(deletedTask);
+    } catch (error: any) {
+      if (error.message.includes('task not found')) 
+        return res.status(404).json({ error: 'Id not found' });
+
+      console.error(`httpDeleteTask Error-> ${error}`);
+      res.status(500).json({error: 'error attempting to delete a task'});
+    }
   }
 
   checkUserId(userId: string) {
-    // text or number. 
-    // Size between 3 to 100
-    const PWD_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
-    if (!userId)
-        return false;
-    if(PWD_REGEX.test(userId)) 
-        return true; 
-  
-    return false; 
+    try {
+      // Size between 3 to 100
+      const PWD_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
+      if (!userId)
+          return false;
+      if(PWD_REGEX.test(userId)) 
+          return true; 
+    
+      return false;
+    } catch (error: any) {
+      console.error(`checkUserId Error-> ${error}`);
+    } 
   }
 
   checkSummary(summary: string) {
-    // Matches any alphanumeric character or the specified symbols. 
-    // Size between 3 to 100
-    const PWD_REGEX = /^.{3,100}$/;
-    if (!summary)
-        return false;
-    if(PWD_REGEX.test(summary)) 
-        return true; 
-  
-    return false; 
+    try {
+      // Matches any alphanumeric character or the specified symbols. 
+      // Size between 3 to 100
+      const PWD_REGEX = /^.{3,100}$/;
+      if (!summary)
+          return false;
+      if(PWD_REGEX.test(summary)) 
+          return true; 
+    
+      return false;
+    } catch (error: any) {
+      console.error(`checkUserId Error-> ${error}`);
+    }  
   }
 }
 
