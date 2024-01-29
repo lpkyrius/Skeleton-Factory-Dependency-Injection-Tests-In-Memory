@@ -1,20 +1,20 @@
 # To-Do
 
-##### Fase 1
+##### This phase
 
 - [x] Project structure
 - [x] TDD
 - [x] In-Memory repository
 - [x] Unit tests
-- [ ] E2E tests - addressing the factory to in-memory repository.
+- [x] E2E tests - addressing the factory to in-memory repository.
 - [ ] Swagger API Docs.
 
-##### Fase 2
+##### Next phase
 
 - [ ] New Repo for:
     - MySQL or Postgres repository;
 
-##### Fase 3
+##### Next phase
 
 - [ ] New Repo for:
     - JWT;
