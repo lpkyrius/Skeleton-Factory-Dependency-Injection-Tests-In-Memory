@@ -107,8 +107,6 @@ describe('#E2E tests for tasks.', () => {
 
   describe('Test GET /task/find/:id', () => {
     test('It should respond with 200 success + Content-Type = json containing a Task like object.', async () => {
-      manageTaskTestFile.resetFile();
-
       const response = await request(app)
             .get('/task/list')
             .expect('Content-Type', /json/)

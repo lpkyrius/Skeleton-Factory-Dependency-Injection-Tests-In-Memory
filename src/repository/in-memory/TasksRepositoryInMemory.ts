@@ -15,7 +15,7 @@ class TasksRepositoryInMemory implements ITaskRepository {
 
   async add(task: Task): Promise<Task> {
     const tasks = this.readTasksFromFile();
-    const newTask = { ...task, id: uuid(), created_at: new Date() };
+    const newTask = { ...task, id: uuid(), created_at: new Date(new Date().toISOString()) };
     tasks.push(newTask);
     this.writeTasksToFile(tasks);
     return newTask;
