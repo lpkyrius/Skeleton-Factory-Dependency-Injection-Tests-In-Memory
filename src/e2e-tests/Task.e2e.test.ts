@@ -8,7 +8,7 @@ import { Task } from '../entities/Task';
 import { ManageTaskTestFile } from '../repository/in-memory/ManageTaskTestFile';
 
 // Mock console.log and console.error globally for the entire test suite
-// So we keep a clear console when tests should return error 500
+// So we keep a clear console when tests should return error 
 // global.console.log = jest.fn();
 // global.console.error = jest.fn();
 
@@ -76,9 +76,7 @@ describe('#E2E tests for tasks.', () => {
 
     test('It should respond with 400 bad request + Content-Type = json for bad formatted task.', async () => {
 
-      const taskData = {
-
-      };
+      const taskData = {};
       
       const response = await request(app)
         .post('/task/add')
@@ -88,6 +86,7 @@ describe('#E2E tests for tasks.', () => {
             
         expect(response.body).toEqual({ error: 'invalid userId' });
     });
+
   });
 
   describe('Test GET /task/list', () => {

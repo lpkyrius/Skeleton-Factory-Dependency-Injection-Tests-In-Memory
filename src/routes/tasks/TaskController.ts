@@ -75,18 +75,13 @@ class TaskController {
   async httpDeleteTask(req: Request, res: Response) {
     try {
       const id = req.params.id;
-      if (!(await this.taskService.exist(id)))
-        return res.status(404).json({ message: 'task not found'});  
       
       const deletedTask = await this.taskService.delete( id );
       if (!deletedTask)
-        return res.status(404).json({ message: 'task not deleted'});
+        return res.status(404).json({ message: 'task not found'});
 
       return res.status(200).json(deletedTask);
     } catch (error: any) {
-      if (error.message.includes('task not found')) 
-        return res.status(404).json({ error: 'Id not found' });
-
       console.error(`httpDeleteTask Error-> ${error}`);
       res.status(500).json({error: 'error attempting to delete a task'});
     }

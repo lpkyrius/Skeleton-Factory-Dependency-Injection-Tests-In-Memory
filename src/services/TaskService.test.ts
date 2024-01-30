@@ -3,7 +3,6 @@ import { Task } from '../entities/Task';
 import { ITaskRepository } from '../repository/ITaskRepository';
 import { TaskService } from './TaskService';
 import { TasksRepositoryInMemory } from '../repository/in-memory/TasksRepositoryInMemory';
-import exp from 'constants';
 
 describe('#taskService', () => {
 
@@ -120,9 +119,10 @@ describe('#taskService', () => {
     });
 
     it('should return false when deleting a non-existing task on TaskService', async () => {
-      expect(async () => {
-        const deletedTaskError: boolean = await taskService.delete('this.id.should.not.exist');
-      }).toBeFalsy;
+      const testDel = async function () {
+        return await taskService.delete('this.id.should.not.exist');
+      }
+      expect(await testDel()).toBeFalsy;
     });
 
   });

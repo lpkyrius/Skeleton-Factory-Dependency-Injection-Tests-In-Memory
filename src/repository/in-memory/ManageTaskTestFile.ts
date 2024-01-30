@@ -9,10 +9,10 @@ class ManageTaskTestFile {
     this.newFile();
   }
 
-  newFile() {
+  async newFile() {
     try {
       if (!fs.existsSync(this.filePath)) {
-        fs.writeFileSync(this.filePath, JSON.stringify(mockedTasks));
+        await fs.promises.writeFile(this.filePath, JSON.stringify(mockedTasks));
       }
     } catch (error) {
       console.error('Error creating file TaskFile.JSON:', error);
@@ -24,9 +24,9 @@ class ManageTaskTestFile {
     return this.filePath;
   }
 
-  resetFile() {
-    this.deleteFile();
-    this.newFile();
+  async resetFile() {
+    await this.deleteFile();
+    await this.newFile();
   }
 
   async deleteFile(): Promise<void> {
