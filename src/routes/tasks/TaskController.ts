@@ -16,7 +16,7 @@ class TaskController {
 
       const task = await this.taskService.add({ userId, summary });
 
-      return res.status(200).json(task);
+      return res.status(201).json(task);
     } catch (error: any) {
       console.error(`httpAddTask Error-> ${error}`);
       res.status(500).json({error: 'error attempting to add a task'});

@@ -36,7 +36,7 @@ describe('#E2E tests for tasks.', () => {
         .post('/task/add')
         .send(taskData)
         .expect('Content-Type', /json/)
-        .expect(200);
+        .expect(201);
             
         expect(response.body).toMatchObject(taskData);
         expect(response.body.summary).toBe('E2E Test summary #1');
