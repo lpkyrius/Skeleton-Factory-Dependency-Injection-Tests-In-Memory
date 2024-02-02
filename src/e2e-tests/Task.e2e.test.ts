@@ -209,7 +209,8 @@ describe('#E2E tests for tasks.', () => {
           .delete('/task/delete/'+ taskToDelete.id)
           .expect('Content-Type', /json/)
           .expect(200);
-          expect(responseDelete.body).toBeTruthy();      
+          
+          expect(responseDelete.body).toEqual({ message: 'success' });      
     });
 
     test('It should respond with 404 + Content-Type = json when trying to delete a task that does not exist.', async () => {

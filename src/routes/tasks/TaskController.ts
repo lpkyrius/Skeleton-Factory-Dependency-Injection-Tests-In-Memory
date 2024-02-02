@@ -25,9 +25,9 @@ class TaskController {
 
   async httpListTasks(req: Request, res: Response) {
     try {
-      const task = await this.taskService.list();
-
-      return res.status(200).json(task);
+      const taskList = await this.taskService.list();
+      
+      return res.status(200).json(taskList);
     } catch (error: any) {
       console.error(`httpListTasks Error-> ${error}`);
       res.status(500).json({error: 'error attempting to list tasks'});
@@ -82,7 +82,7 @@ class TaskController {
       if (!deletedTask)
         return res.status(404).json({ message: 'task not found'});
 
-      return res.status(200).json(deletedTask);
+        return res.status(200).json({ message: 'success' });
     } catch (error: any) {
       console.error(`httpDeleteTask Error-> ${error}`);
       res.status(500).json({error: 'error attempting to delete a task'});
