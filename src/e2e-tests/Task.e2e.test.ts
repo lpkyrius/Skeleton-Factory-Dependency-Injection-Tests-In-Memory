@@ -142,9 +142,8 @@ describe('#E2E tests for tasks.', () => {
             .expect(200);
 
       const taskExpected: Task = Object.assign({}, response.body.slice(-1)[0]);
-
       taskExpected.summary = 'Updating task summary with this info!';
-
+      
       const responseUpdate = await request(app)
 
           .put('/task/update/'+ taskExpected.id)

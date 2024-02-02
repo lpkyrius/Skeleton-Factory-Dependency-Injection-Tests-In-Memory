@@ -54,7 +54,9 @@ class TaskController {
   async httpUpdateTask(req: Request, res: Response) {
     try {
       const taskToUpdate: Task = req.body;
-
+      const id = req.params.id;
+      taskToUpdate.id = id;
+      
       if (!this.checkUserId(taskToUpdate.userId!))
         return res.status(400).json({ error: 'invalid userId' });
       if (!this.checkSummary(taskToUpdate.summary))
